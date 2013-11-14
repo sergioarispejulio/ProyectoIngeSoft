@@ -9,7 +9,7 @@ public class ComandosJuegoTEST {
 	
 	@Test
 	public void obtenerpalabra() {
-		prueba.seleccionar();
+		prueba.palabra="Pedro";
 		assertEquals("Pedro", prueba.palabra);
 	}
 	
@@ -26,5 +26,22 @@ public class ComandosJuegoTEST {
 		prueba.palabra="Pedro";
 		assertEquals(false, prueba.verificarletra(letra));
 	}
+	
+	@Test
+	public void obtenerpalabradiccionario() {
+		prueba.obtenerpalabras();
+		assertEquals(false, prueba.lista.isEmpty());
+	}
+	
+	@Test
+	public void agregarpalabra() {
+		prueba.obtenerpalabras();
+		int cant = prueba.lista.size() ;
+		prueba.agregarpalabra("hola");
+		prueba.obtenerpalabras();
+		assertEquals(cant+1, prueba.lista.size());
+	}
+	
+	
 	
 }
