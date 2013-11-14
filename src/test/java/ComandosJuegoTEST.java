@@ -42,6 +42,10 @@ public class ComandosJuegoTEST {
 		assertEquals(cant+1, prueba.lista.size());
 	}
 	
-	
+	@Test
+	public void seleccionnivel() {
+		prueba.seleccionarnivel(2);
+		assertEquals(4, prueba.canterrores);
+	}
 	
 }

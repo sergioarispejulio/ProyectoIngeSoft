@@ -14,22 +14,22 @@ import java.util.ArrayList;
 public class ComandosJuego {
 	public String palabra;
 	public String adivina;
-	public int canterrores;
+	public int canterrores;//fácil son 6 errores, normal son 4, difícil son 2 errores
 	ArrayList<String> lista;
 	public int errores;
 	public int nivel; //1 es fácil;2 es normal; 3 es difícil
 	
-	public ComandosJuego()
+	public ComandosJuego() //constructor
 	{
 		lista = new ArrayList<String>();
 	}
 	
-	public boolean verificarletra(String letra)
+	public boolean verificarletra(String letra)//verifica si la letra esta en la palabra
 	{
 		return palabra.contains(letra) ;
 	}
 	
-	public void obtenerpalabras()
+	public void obtenerpalabras()//cargar palabras del diccionario
 	{
 		lista.clear();
 		try{
@@ -45,7 +45,7 @@ public class ComandosJuego {
         }
 	}
 	
-	public void agregarpalabra(String palabra)
+	public void agregarpalabra(String palabra)//agregar palabras al diccionario
 	{
 		lista.add(palabra);
 		try{
@@ -60,6 +60,25 @@ public class ComandosJuego {
 			bw.close();
 		}
 		catch(IOException e){};
+	}
+	
+	public void seleccionarnivel(int ni)//Pone la cantidad de errores de acuerdo al nivel
+	{
+		switch(ni)
+		{
+		case 1:
+			canterrores = 6;
+			nivel = ni;
+			break;
+		case 2:
+			canterrores = 4;
+			nivel = ni;
+			break;
+		case 3:
+			canterrores = 2;
+			nivel = ni;
+			break;
+		}
 	}
 	
 }
