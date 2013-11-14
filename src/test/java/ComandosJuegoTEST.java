@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class ComandosJuegoTEST {
 
-	ComandosJuego prueba = new ComandosJuego();;
+	ComandosJuego prueba = new ComandosJuego();
 	
 	@Test
 	public void obtenerpalabra() {

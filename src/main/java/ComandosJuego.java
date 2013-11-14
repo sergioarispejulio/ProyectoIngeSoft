@@ -7,7 +7,9 @@ import java.util.ArrayList;
 
 public class ComandosJuego {
 	public String palabra;
+	public String adivina;
 	public int canterrores;
+	
 	
 	public void seleccionar()
 	{
@@ -36,14 +38,7 @@ public class ComandosJuego {
 	
 	public boolean verificarletra(String letra)
 	{
-		if(palabra.contains(letra))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return palabra.contains(letra);
 	}
 	
 }
