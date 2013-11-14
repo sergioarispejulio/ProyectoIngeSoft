@@ -1,0 +1,213 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>UCB Zone Login</title>
+  <meta http-equiv="Cache-control" content="no-cache">
+  <meta http-equiv="Pragma" content="no-cache">
+  <SCRIPT LANGUAGE="JavaScript">
+    var blur = 0;
+    var starttime = new Date();
+    var startclock = starttime.getTime();
+    var mytimeleft = 0;
+
+    function doTime() {
+      window.setTimeout( "doTime()", 1000 );
+      t = new Date();
+      time = Math.round((t.getTime() - starttime.getTime())/1000);
+      if (mytimeleft) {
+        time = mytimeleft - time;
+        if (time <= 0) {
+          window.location = "/easyhotspot/login/hotspotlogin.php?res=popup3&uamip=192.168.182.1&uamport=3990";
+        }
+      }
+      if (time < 0) time = 0;
+      hours = (time - (time % 3600)) / 3600;
+      time = time - (hours * 3600);
+      mins = (time - (time % 60)) / 60;
+      secs = time - (mins * 60);
+      if (hours < 10) hours = "0" + hours;
+      if (mins < 10) mins = "0" + mins;
+      if (secs < 10) secs = "0" + secs;
+      title = "Online time: " + hours + ":" + mins + ":" + secs;
+      if (mytimeleft) {
+        title = "Remaining time: " + hours + ":" + mins + ":" + secs;
+      }
+      if(document.all || document.getElementById){
+         document.title = title;
+      }
+      else {   
+        self.status = title;
+      }
+    }
+
+    function popUp(URL) {
+      if (self.name != "chillispot_popup") {
+        chillispot_popup = window.open(URL, 'chillispot_popup', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=375');
+      }
+    }
+
+    function doOnLoad(result, URL, userurl, redirurl, timeleft) {
+      if (timeleft) {
+        mytimeleft = timeleft;
+      }
+      if ((result == 1) && (self.name == "chillispot_popup")) {
+        doTime();
+      }
+      if ((result == 1) && (self.name != "chillispot_popup")) {
+        chillispot_popup = window.open(URL, 'chillispot_popup', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=375');
+      }
+      if ((result == 2) || result == 5) {
+        document.form1.UserName.focus()
+      }
+      if ((result == 2) && (self.name != "chillispot_popup")) {
+        chillispot_popup = window.open('', 'chillispot_popup', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=400,height=200');
+        chillispot_popup.close();
+      }
+      if ((result == 12) && (self.name == "chillispot_popup")) {
+        doTime();
+        if (redirurl) {
+          opener.location = redirurl;
+        }
+        else if (opener.home) {
+          opener.home();
+        }
+        else {
+          opener.location = "about:home";
+        }
+        self.focus();
+        blur = 0;
+      }
+      if ((result == 13) && (self.name == "chillispot_popup")) {
+        self.focus();
+        blur = 1;
+      }
+    }
+
+    function doOnBlur(result) {
+      if ((result == 12) && (self.name == "chillispot_popup")) {
+        if (blur == 0) {
+          blur = 1;
+          self.focus();
+        }
+      }
+    }
+  </script>
+<script type="text/javascript" src="jquery-1.3.2.js"></script>
+<link href="css.css" media="screen" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+$(document).ready(function() {	
+	$('#login').blur(function(){
+		
+		$('#Info').html('<img src="loader.gif" alt="" />').fadeOut(1000);
+
+		var login= $(this).val();		
+		var dataString = 'login='+login;
+		
+		$.ajax({
+            type: "POST",
+            url: "check_username_availability.php",
+            data: dataString,
+            success: function(data) {
+				$('#Info').fadeIn(1000).html(data);
+				//alert(data);
+            }
+        });
+    });              
+});    
+</script>
+<script type="text/javascript">jQuery(document).ready(function(){
+  jQuery('input#demo').each(function(i){
+    jQuery(this).addClass('input-prompt-' + i);
+    var promptSpan = jQuery('<span class="input-prompt"/>');
+    jQuery(promptSpan).attr('id', 'input-prompt-' + i);
+    jQuery(promptSpan).append(jQuery(this).attr('title'));
+    jQuery(promptSpan).click(function(){
+      jQuery(this).hide();
+      jQuery('.' + jQuery(this).attr('id')).focus();
+    });
+    if(jQuery(this).val() != ''){
+      jQuery(promptSpan).hide();
+    }
+    jQuery(this).before(promptSpan);
+    jQuery(this).focus(function(){
+      jQuery('#input-prompt-' + i).hide();
+    });
+    jQuery(this).blur(function(){
+      if(jQuery(this).val() == ''){
+        jQuery('#input-prompt-' + i).show();
+      }
+    });
+  });
+});</script>
+<style type="text/css">.input-prompt { position: absolute; font-style: italic; color: #aaa; margin: 0.7em 0 0 1em; }</style>
+<link href="styles.css" rel="stylesheet" type="text/css" />
+</head>
+<body onLoad="javascript:doOnLoad(5, '/easyhotspot/login/hotspotlogin.php?res=popup2&uamip=192.168.182.1&uamport=3990&userurl=&redirurl=&timeleft=','', '', '')" onBlur = 'javascript:doOnBlur(5)' style="background:#0080FF">
+  <h4 style="text-align: center;">UCB Zone Login</h4>
+<div id="wrapper">
+ 
+  
+<div id="login">
+	<table align=center>
+  <form name="form1" method="post" action="/easyhotspot/login/hotspotlogin.php">
+  <input type="hidden" name="challenge" value="449f0000c07991f72a5cf67a49c73c12">
+  <input type="hidden" name="uamip" value="192.168.182.1">
+  <input type="hidden" name="uamport" value="3990">
+<tr align='center'>
+<td align='center' style="color: #ffffff;" ><input type="hidden" name="userurl" value=""  >
+Username:<input type="text" name="UserName" size="12" maxlength="128"></td></tr>
+<tr>
+<td style="color: #ffffff;">
+Password:<input type="password" name="Password" size="12" maxlength="128"> 
+</td>
+</tr>
+<tr></tr>
+<tr></tr>
+<tr align='center'>
+<td colspan='2'>
+<input type="submit" name="button" value="Login" onClick="javascript:popUp('/easyhotspot/login/hotspotlogin.php?res=popup1&uamip=192.168.182.1&uamport=3990')"></td>
+<td></td>
+</tr>
+<tr></tr>
+<tr></tr>
+<tr>
+<td align='center' >
+   <img align='middle' src='images/flecha4.gif' WIDTH=45 HEIGHT=60>
+
+<a href="/easyhotspot/login/hotspotlogin.php?res=registrar&uamip=192.168.182.1&uamport=3990&mac=20-C9-D0-48-CE-E1" style="color: #ffffff;">Registrarse</a> 
+
+<img align='middle' src='images/flecha3.gif' WIDTH=45 HEIGHT=60 >
+</td>
+</tr>
+        
+  </form>
+</div>
+</div>
+  
+
+</div>
+<script type="text/javascript">
+var seconds=20;
+var sz_redir = "terms.html"; // redirection url
+var sz_btn = "images/btn-continue.png";
+
+document.getElementById("countDownText").innerHTML = seconds;
+function counter(){ 
+
+	if(seconds<=-1){
+		seconds+=1;
+		document.getElementById("sz_btncont").disabled=false;
+		document.getElementById("sz_btncont").src = sz_btn;
+		document.getElementById("sz_continue").href = sz_redir;
+	}else{
+		document.getElementById("countDownText").innerHTML=seconds;
+		seconds--;
+		setTimeout("counter()",1000) ;
+	}
+	
+	
+} 
+counter();
+</script>
+</body>
+</html>
