@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/sergioarispejulio/ProyectoIngeSoftware.png)](https://travis-ci.org/sergioarispejulio/ProyectoIngeSoftware)
+[![Build Status](https://travis-ci.org/sergioarispejulio/ProyectoIngeSoft.png)](https://travis-ci.org/sergioarispejulio/ProyectoIngeSoft)
 
 prueba2
 =======
