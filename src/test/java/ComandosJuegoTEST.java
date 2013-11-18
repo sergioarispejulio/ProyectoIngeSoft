@@ -9,8 +9,8 @@ public class ComandosJuegoTEST {
 	
 	@Test
 	public void obtenerpalabra() {
-		prueba.palabra="Pedro";
-		assertEquals("Pedro", prueba.palabra);
+		prueba.obtenerpalabras();
+		assertEquals("hola", prueba.palabra);
 	}
 	
 	@Test
@@ -46,6 +46,79 @@ public class ComandosJuegoTEST {
 	public void seleccionnivel() {
 		prueba.seleccionarnivel(2);
 		assertEquals(4, prueba.canterrores);
+	}
+	
+	@Test
+	public void gano() {
+		prueba.seleccionarnivel(2);
+		prueba.palabra="hola";
+		prueba.adivina = "hola";
+		assertEquals(1, prueba.verificarganador());
+	}
+	
+	@Test
+	public void perdio() {
+		prueba.seleccionarnivel(2);
+		prueba.errores = 4;
+		assertEquals(-1, prueba.verificarganador());
+	}
+	
+	@Test
+	public void continuajuego() {
+		prueba.seleccionarnivel(2);
+		prueba.palabra="hola";
+		prueba.adivina = "h_la";
+		assertEquals(0, prueba.verificarganador());
+	}
+	
+	@Test
+	public void rellenarpalabra() {
+		prueba.palabra="hola";
+		prueba.adivina = "h_la";
+		prueba.rellenar("o");
+		assertEquals("hola", prueba.adivina);
+	}
+	
+	@Test
+	public void rellenarcasillas() {
+		prueba.obtenerpalabras();
+		assertEquals("____", prueba.adivina);
+	}
+	
+	@Test
+	public void ingresoletracorrecta() {
+		prueba.obtenerpalabras();
+		prueba.ingresoletra("h");
+		assertEquals("h___", prueba.adivina);
+	}
+	
+	@Test
+	public void ingresoletraincorrecta() {
+		prueba.obtenerpalabras();
+		prueba.ingresoletra("w");
+		assertEquals("____", prueba.adivina);
+		assertEquals(1, prueba.errores);
+	}
+	
+	@Test
+	public void ingresoletraerronea() {
+		prueba.obtenerpalabras();
+		assertEquals(false, prueba.ingresoletra("@") );
+	}
+	
+	@Test
+	public void veriletra1() {
+		assertEquals(true, prueba.letracorrecta("h"));
+	}
+	
+	@Test
+	public void veriletra2() {
+		assertEquals(true, prueba.letracorrecta("H"));
+	}
+	
+	@Test
+	public void veriletra3() {
+		assertEquals(false, prueba.letracorrecta("@"));
 	}
 	
 }

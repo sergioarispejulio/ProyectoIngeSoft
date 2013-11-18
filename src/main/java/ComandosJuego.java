@@ -12,16 +12,79 @@ import java.util.ArrayList;
 
 
 public class ComandosJuego {
-	public String palabra;
-	public String adivina;
+	public String palabra;// palabra a adivinar
+	public String adivina; //estado de lo que se esta adivinando
 	public int canterrores;//fácil son 6 errores, normal son 4, difícil son 2 errores
 	ArrayList<String> lista;
-	public int errores;
+	public int errores; //cantidad de errores
 	public int nivel; //1 es fácil;2 es normal; 3 es difícil
+	public int cantpista; //cantidad de pistas usadas
 	
 	public ComandosJuego() //constructor
 	{
 		lista = new ArrayList<String>();
+	}
+	
+	public boolean letracorrecta(String letra)// Verifica que la letra ingresada sea la correcta
+	{
+		letra = letra.toLowerCase();
+		char l = letra.charAt(0);
+		if(l <= 96 || l >=123)
+		{
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean ingresoletra(String letra) //Cuando entra una letra
+	{
+		if(letracorrecta(letra))
+		{
+			if(verificarletra(letra))
+			{
+				rellenar(letra);
+				return true;
+			}
+			else
+			{
+				errores++;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public int verificarganador()//Verifica el estado del juego
+	{
+		if(errores == canterrores)
+		{
+			return -1; //Perdio
+		}
+		if(palabra.equals(adivina))
+		{
+			return 1;//gano
+		}
+		return 0;// Sigue en juego
+	}
+	
+	public void rellenar(String letra) //rellena el string adivina si la letra es correcta
+	{
+		String aux="";
+		String ex;
+		for(int i = 0; i < palabra.length(); i++)
+		{
+			ex="";
+			ex+= palabra.charAt(i);
+			if( letra.contains(ex) == true )
+			{
+				aux+=ex;
+			}
+			else
+			{
+				aux+=adivina.charAt(i);
+			}
+		}
+		adivina = aux;
 	}
 	
 	public boolean verificarletra(String letra)//verifica si la letra esta en la palabra
@@ -29,9 +92,10 @@ public class ComandosJuego {
 		return palabra.contains(letra) ;
 	}
 	
-	public void obtenerpalabras()//cargar palabras del diccionario
+	public void obtenerpalabras()//cargar palabras del diccionario, selecciona una de esta y crea los espacios de adivina
 	{
 		lista.clear();
+		cantpista = 0;
 		try{
 			String linea = "";
 			FileReader leerArchivo = new FileReader("Archivo.txt");
@@ -43,6 +107,12 @@ public class ComandosJuego {
         }catch (Exception e){ 
             System.err.println("Ocurrio un error: " + e.getMessage());
         }
+		palabra = "hola";
+		adivina="";
+		for(int i = 0; i < palabra.length(); i++)
+		{
+			adivina+="_";
+		}
 	}
 	
 	public void agregarpalabra(String palabra)//agregar palabras al diccionario
