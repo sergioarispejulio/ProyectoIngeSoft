@@ -25,6 +25,26 @@ public class ComandosJuego {
 		lista = new ArrayList<String>();
 	}
 	
+	public String mostrarpista()//Da una pista y se aumenta la cantidad de pistas usadas, pero si son mas de 3 pistas, devuelve vacio
+	{
+		String aux="";
+		char ex;
+		if(cantpista <= 3)
+		{
+			for(int i = 0; i < palabra.length(); i++)
+			{
+				ex = adivina.charAt(i);
+				if( ex == '_' )
+				{
+					aux+=palabra.charAt(i);
+					cantpista++;
+					break;
+				}
+			}
+		}
+		return aux;
+	}
+	
 	public boolean letracorrecta(String letra)// Verifica que la letra ingresada sea la correcta
 	{
 		letra = letra.toLowerCase();
@@ -113,6 +133,7 @@ public class ComandosJuego {
 		{
 			adivina+="_";
 		}
+		cantpista = 0;
 	}
 	
 	public void agregarpalabra(String palabra)//agregar palabras al diccionario

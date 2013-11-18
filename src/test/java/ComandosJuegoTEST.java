@@ -121,4 +121,26 @@ public class ComandosJuegoTEST {
 		assertEquals(false, prueba.letracorrecta("@"));
 	}
 	
+	@Test
+	public void darpista1() {
+		prueba.palabra = "hola";
+		prueba.adivina = "____";
+		assertEquals("h", prueba.mostrarpista());
+	}
+	
+	@Test
+	public void darpista2() {
+		prueba.palabra = "hola";
+		prueba.adivina = "h_l_";
+		assertEquals("o", prueba.mostrarpista());
+	}
+	
+	@Test
+	public void darpista3() {
+		prueba.palabra = "hola";
+		prueba.adivina = "____";
+		prueba.cantpista = 4;
+		assertEquals("", prueba.mostrarpista());
+	}
+	
 }
